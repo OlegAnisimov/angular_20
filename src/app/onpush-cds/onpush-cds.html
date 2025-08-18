@@ -1,0 +1,23 @@
+<div class="container">
+  <p>onpush-cds works!</p>
+  <!-- signal -->
+  @for (item of inputList()!; track item.id) {
+    <div>{{item.name}}</div>
+  }
+  
+  <!-- traditional input -->
+  <!-- @for (item of inputList!; track item.id) {
+    <div>{{item.name}}</div>
+  } -->
+  
+  <button (click)="logInputList()">log inputList</button>
+  <br>
+  <div>
+    <!-- <span>needUpdate$</span>
+    {{needUpdate$ | async}}
+  </div> -->
+
+  <div>
+    <!-- <h1>{{testPimitiveInput}}</h1> -->
+  </div>
+</div> 
