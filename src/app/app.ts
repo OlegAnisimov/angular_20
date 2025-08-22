@@ -1,9 +1,10 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, inject, OnInit, Signal, signal, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, NgZone, OnInit, Signal, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DefaultCds } from './default-cds/default-cds';
 import { OnpushCds } from './onpush-cds/onpush-cds';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { MockService } from './utils/mock.service';
 
 export interface User {
   id: number;
@@ -19,7 +20,8 @@ export interface User {
   selector: 'app-root',
   imports: [RouterOutlet, DefaultCds, OnpushCds, AsyncPipe],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App implements OnInit
 //, AfterViewChecked 
@@ -40,26 +42,48 @@ export class App implements OnInit
   @ViewChild(OnpushCds) onpushCds!: OnpushCds;
 
   private cdr = inject(ChangeDetectorRef);
+  private zone = inject(NgZone);
+  private mockService = inject(MockService);
 
   needUpdate = signal<boolean>(false);
   needUpdate$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   testPimitiveInput: number = 0;
 
-constructor() {  
+constructor() {
+  this.zone.runOutsideAngular(() => {
+    console.log('zone');
+    
+  }) 
+  console.log('fuck1');
+   
     //       setInterval(() => {
     //   // require view to be updated
     //   this.cdr.markForCheck();
+    //   console.log(1);
     // }, 1000);
+  console.log('fuck2');
+
 }
 
   ngOnInit(): void {
-    for (let index = 0; index < 10; index++) {
-      const element = {
-        id: index,
-        name: 'name' + index,
-      };
-      this.list.push(element)
-    }
+    // for (let index = 0; index < 10; index++) {
+    //   const element = {
+    //     id: index,
+    //     name: 'name' + index,
+    //   };
+    //   this.list.push(element)
+    // }
+
+    this.mockService.getUsers(0, 10)
+    .pipe(
+      tap((res: User[]) => {
+        // this.list = JSON.parse(JSON.stringify(res));
+        this.list = structuredClone(res);
+        console.log(this.list);
+        
+      })
+    )
+    .subscribe()
   }
 
   ngAfterViewChecked(): void {
