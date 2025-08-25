@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, inject, OnInit, Signal, signal, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, Signal, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DefaultCds } from './default-cds/default-cds';
 import { OnpushCds } from './onpush-cds/onpush-cds';
@@ -19,7 +19,8 @@ export interface User {
   selector: 'app-root',
   imports: [RouterOutlet, DefaultCds, OnpushCds, AsyncPipe],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App implements OnInit
 //, AfterViewChecked 
