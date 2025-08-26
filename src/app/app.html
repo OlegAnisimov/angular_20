@@ -4,9 +4,9 @@
 
 <main class="main">
   <!--  -->
-  <app-default-cds [inputList]="list" (click)="testOnDefault()"></app-default-cds>
+  <app-default-cds [inputList]="list()" (click)="testOnDefault()"></app-default-cds>
   
-  <app-onpush-cds [inputList]="list"
+  <app-onpush-cds [inputList]="list()"
     [needUpdate]="needUpdate()" 
     [needUpdate$]="needUpdate$" 
     [testPimitiveInput]="testPimitiveInput" 

@@ -31,10 +31,9 @@ export class OnpushCds implements OnInit, OnChanges, DoCheck
 
 
   constructor() {
-    //     setInterval(() => {
-    //   // require view to be updated
-    //   this.cdr.markForCheck();
-    // }, 1000);
+    effect(() => {
+  console.log(`The current inputList is: ${this.inputList()}`);
+});
   }
 
   // SERVICES

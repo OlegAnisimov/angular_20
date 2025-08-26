@@ -27,7 +27,7 @@ export class App implements OnInit
 {
   protected readonly title = signal('angular_20');
   // private _list: User[] = [];
-  list: User[] = [];
+  // list: User[] = [];
   // TODO: see getters setters
   // public get list(): User {
   //   return this._list;
@@ -35,6 +35,9 @@ export class App implements OnInit
   // public set list(value: User) {
   //   this._list = value;
   // }
+
+  // signal obj
+  list = signal<User[] | never []>([]);
 
   // VIEW CHILD
   @ViewChild(DefaultCds) defaultCds!: DefaultCds;;
@@ -59,7 +62,8 @@ constructor() {
         id: index,
         name: 'name' + index,
       };
-      this.list.push(element)
+      // this.list.push(element);
+      this.list.update((users: User[]) => [...users, element]);
     }
   }
 
@@ -71,30 +75,30 @@ constructor() {
   }
 
   mutateList() {
-    this.list[0].name += '1';
+    this.list()[0].name += '1';
 
-    if (!this.list[0].foo) {
-      this.list[0].foo = () => {
-        console.log('foo');
-      };
-    }
+    // if (!this.list[0].foo) {
+    //   this.list[0].foo = () => {
+    //     console.log('foo');
+    //   };
+    // }
 
-    if (!this.list[0].date) {
-      this.list[0].date = new Date();
-    }
+    // if (!this.list[0].date) {
+    //   this.list[0].date = new Date();
+    // }
 
-    if (!this.list[0].bar) {
-      this.list[0].bar = {
-        a: 11,
-        b: [11],
-        c: {
-          d: 11,
-          e: () => {
-            console.log('e');
-          }
-        }
-      }
-    }
+    // if (!this.list[0].bar) {
+    //   this.list[0].bar = {
+    //     a: 11,
+    //     b: [11],
+    //     c: {
+    //       d: 11,
+    //       e: () => {
+    //         console.log('e');
+    //       }
+    //     }
+    //   }
+    // }
 
     //  SHALLOW COPIES
     // this.list = [...this.list];
@@ -107,16 +111,19 @@ constructor() {
 
 
     console.log(this.list);
-    console.log(this.list[0].date);
+    // console.log(this.list[0].date);
     // @ts-ignore
-    this.list[0].foo();
+    // this.list[0].foo();
     // @ts-ignore
     // this.list[0].bar.e();
 
-    // SIGNL
+    // SIGNAL prim flag
     // this.needUpdate.update(() => true);
 
+    // SIGNAL obj update
     // obs
+    this.list.update(users => [...users]);
+
     // this.needUpdate$.next(true);
 
     // PRIMITIVE  
