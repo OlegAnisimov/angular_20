@@ -49,11 +49,8 @@ export class App implements OnInit
   needUpdate$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   testPimitiveInput: number = 0;
 
-constructor() {  
-    //       setInterval(() => {
-    //   // require view to be updated
-    //   this.cdr.markForCheck();
-    // }, 1000);
+constructor() {
+
 }
 
   ngOnInit(): void {
@@ -77,11 +74,13 @@ constructor() {
   mutateList() {
     this.list()[0].name += '1';
 
-    // if (!this.list[0].foo) {
-    //   this.list[0].foo = () => {
-    //     console.log('foo');
-    //   };
-    // }
+    if (!this.list()[0].foo) {
+      this.list()[0].foo = () => {
+        console.log('foo');
+      };
+      console.log(this.list()[0]);
+      
+    }
 
     // if (!this.list[0].date) {
     //   this.list[0].date = new Date();
@@ -110,10 +109,10 @@ constructor() {
 
 
 
-    console.log(this.list);
+    // console.log(this.list);
     // console.log(this.list[0].date);
     // @ts-ignore
-    // this.list[0].foo();
+    this.list()[0].foo();
     // @ts-ignore
     // this.list[0].bar.e();
 
@@ -162,6 +161,8 @@ constructor() {
 
 /*
 cd - change detection
+  TODO: какие best practise для  cdr. методов?
+
 */ 
 
 
